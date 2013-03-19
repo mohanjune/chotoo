@@ -16,19 +16,19 @@ import scalax.file.Path
 object KickOff {
 
   val usage = "Directory Path and SearchString not supplied as arguments" +
-    " \n Usage:- run Directory name_Of_File_containing_List_of_Strings_to_be_Searched"
+    " \n Usage:- run Directory_Path properties_File_containing_SearchStrings"
 
   /* Entry point of the application */
   def main(args: Array[String]) {
     println("Chotoo boostrapping....")
 
-    if (args.length < 2) println(usage)
-    else {
+//    if (args.length < 2) println(usage)
+//    else {
       Path("entriesfound.txt").delete(true) //TODO: find some other alternatives
       val inputStrings = Path(args(1)).lines(includeTerminator = false).dropWhile { _.isEmpty }.
         takeWhile { _.nonEmpty }.toList
       inputStrings.foreach(kickoff(args(0), _))
-    }
+//   }
   }
 
   /* Initiate file processing */
