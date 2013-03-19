@@ -35,28 +35,27 @@ class Initiator(pathToDir: String, searchString: String) {
     println(file.path)
 
     // Take the first set of non-empty lines, keeping the terminator for each line
-    val nonEmptyLines = file.lines(includeTerminator = false)
+    val nonEmptyLines = file.lines(includeTerminator = false).toList
       .dropWhile(_ isEmpty)
       .takeWhile(_ nonEmpty)
     if (!nonEmptyLines.isEmpty) {
-      nonEmptyLines.foreach(e => process(e.split(" ").toList))
+      nonEmptyLines.foreach(e => process(e.split(" ").toList, file))
     }
   }
 
   /**
    *  process method splits the lines into lists of strings
    */
-  def process(s: List[String]) = {
-    val d = s.filter(_ == searchString)
-    println(d.contains(searchString))
-    println(s.filter(_ == searchString))
-    writeToOutput(d)
+  def process(s: List[String], file: Path) = {
+    val foundStrings = s.filter(_ == searchString)
+    foundStrings.foreach(string => println(string + "  found in  " + file.toString))
+    //    writeToOutput(d)                                                       // avoiding writing to file for now
   }
 
   /**
    * Writes the searched string into a file
    */
-  def writeToOutput(foundString: Traversable[String]) = {
-    Path("entriesfound.txt").appendStrings(foundString)
-  }
+  //  def writeToOutput(foundString: Traversable[String]) = {
+  //    Path("entriesfound.txt").appendStrings(foundString)
+  //  }
 }
